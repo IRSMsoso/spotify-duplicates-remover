@@ -52,8 +52,8 @@ fn get_first_track_ids_of_duplicates<'a>(
     tracks: &[TrackWithId<'a>],
     duplicates: HashMap<UniqueTrack, usize>,
 ) -> HashSet<TrackId<'a>> {
-    println!("tracks: {:?}", tracks);
-    println!("duplicates: {:?}", duplicates);
+    //println!("tracks: {:?}", tracks);
+    //println!("duplicates: {:?}", duplicates);
     let mut ids: HashSet<TrackId> = HashSet::new();
     for (duplicate_track, duplicates_count) in duplicates {
         if duplicates_count > 1 {
@@ -274,6 +274,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     if track_counts.is_empty() {
         println!("Looks like no duplicates.");
+        dont_disappear::any_key_to_continue::default();
         return Ok(());
     }
 
@@ -291,6 +292,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     if !confirmation {
         println!("Alrighty, see ya.");
+        dont_disappear::any_key_to_continue::default();
         return Ok(());
     }
 
@@ -305,6 +307,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
         ids_to_add.push(PlayableId::from(id));
     }
 
+    let ids_to_remove_len = ids_to_remove.len();
+    let ids_to_add_len = ids_to_add.len();
+
     println!("Removing all duplicates..");
     spotify.playlist_remove_all_occurrences_of_items(
         PlaylistId::from_id(&buffer)?,
@@ -314,6 +319,13 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     println!("Adding all duplicates back only once..");
     spotify.playlist_add_items(PlaylistId::from_id(&buffer)?, ids_to_add, None)?;
+
+    println!(
+        "Finished! {} songs removed and {} songs added back",
+        ids_to_remove_len, ids_to_add_len
+    );
+
+    dont_disappear::any_key_to_continue::default();
 
     Ok(())
 }

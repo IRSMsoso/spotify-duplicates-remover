@@ -1,6 +1,8 @@
 [package]
 name = "spotify-remove-duplicates"
-version = "0.1.0"
+authors = ["Cameron VanderTuig"]
+repository = "https://github.com/IRSMsoso/spotify-duplicates-remover"
+version = "0.1.1"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -13,6 +15,7 @@ itertools = "0.11.0"
 futures-util = "0.3.28"
 indicatif = "0.17.6"
 dialoguer = {version = "0.10.4", features = []}
+dont_disappear = "3.0.1"
 
 [dependencies.rspotify]
 version = "0.12.0"
