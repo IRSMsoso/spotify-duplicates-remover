@@ -6,10 +6,9 @@ use rspotify::{prelude::*, scopes, AuthCodePkceSpotify, Credentials, OAuth};
 use std::collections::{HashMap, HashSet};
 use std::error::Error;
 use std::hash::Hash;
+use std::io;
 use std::io::Write;
 use std::sync::{Arc, Mutex};
-use std::time::Duration;
-use std::{io, thread};
 use tokio::sync::broadcast;
 use warp::Filter;
 
@@ -220,8 +219,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
         pb.set_message(format!("{} dups", count));
 
         ///////
-
-        thread::sleep(Duration::from_millis(12));
     }
 
     pb.finish();
